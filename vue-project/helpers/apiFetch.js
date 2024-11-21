@@ -8,8 +8,10 @@ export default async function (method, route, body = null)
     }
     if (body)
     {
+        options.headers['Content-Type'] = 'application/json'
         options.body = JSON.stringify(body)
+
     }
-    const response = await fetch( `https://kosmos/api-kosmos${route}`, options)
+    const response = await fetch( `http://kosmos/api-kosmos${route}`, options)
     return await response.json()
 }

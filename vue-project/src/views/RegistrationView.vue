@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 import apiFetch from "../../helpers/apiFetch.js";
+import ErrorDescription from "@/components/ErrorDescription.vue";
 
 const form = ref({
   data: {
@@ -17,6 +18,7 @@ const form = ref({
 })
 
 const sendForm = async ()=>{
+  form.value.errors = {}
   const result = await apiFetch('post', '/registration', form.value.data)
   if(result.error)
   {
@@ -37,36 +39,41 @@ const sendForm = async ()=>{
         <div>
           <label for="lastname" class="block text-sm font-medium leading-6 text-gray-900">Фамилия</label>
           <div class="mt-2">
-            <input id="lastname" v-model="form.data.last_name" name="text" type="text" class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
+            <input id="lastname" v-model="form.data.last_name" :class="{'has_error': form.errors.last_name}" name="text" type="text" class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
           </div>
+          <ErrorDescription :error="form.errors.last_name" />
         </div>
 
         <div>
           <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Имя</label>
           <div class="mt-2">
-            <input id="name" name="text" v-model="form.data.first_name" type="text" class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
+            <input id="name" name="text" v-model="form.data.first_name" :class="{'has_error': form.errors.first_name}" type="text" class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
           </div>
+          <ErrorDescription :error="form.errors.first_name" />
         </div>
 
         <div>
           <label for="patronymic" class="block text-sm font-medium leading-6 text-gray-900">Отчество</label>
           <div class="mt-2">
-            <input id="patronymic" name="text" v-model="form.data.patronymic" type="text" class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
+            <input id="patronymic" name="text" v-model="form.data.patronymic" :class="{'has_error': form.errors.patronymic}" type="text" class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
           </div>
+          <ErrorDescription :error="form.errors.patronymic" />
         </div>
 
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Электронная почта</label>
           <div class="mt-2">
-            <input id="email" name="email" v-model="form.data.email" type="email"   class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
+            <input id="email" name="email" v-model="form.data.email" :class="{'has_error': form.errors.email}" type="email"   class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
           </div>
+          <ErrorDescription :error="form.errors.email" />
         </div>
 
         <div>
           <label for="b_date" class="block text-sm font-medium leading-6 text-gray-900">Дата рождения</label>
           <div class="mt-2">
-            <input id="b_date" name="email" v-model="form.data.birth_date" type="date"   class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
+            <input id="b_date" name="b_date" v-model="form.data.birth_date" :class="{'has_error': form.errors.birth_date}" type="date"   class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
           </div>
+          <ErrorDescription :error="form.errors.birth_date" />
         </div>
 
         <div>
@@ -74,8 +81,9 @@ const sendForm = async ()=>{
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Пароль</label>
           </div>
           <div class="mt-2">
-            <input id="password" name="password" v-model="form.data.password" type="password" class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
+            <input id="password" name="password" v-model="form.data.password" :class="{'has_error': form.errors.password}" type="password" class="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6">
           </div>
+          <ErrorDescription :error="form.errors.password" />
         </div>
 
         <div>

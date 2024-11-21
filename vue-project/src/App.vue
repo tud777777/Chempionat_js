@@ -8,4 +8,11 @@ import Header from "@/components/Header.vue";
 
   <RouterView />
 </template>
-
+ <style>
+  .form_error{
+    color:red;
+  }
+  .has_error{
+    border: 1px solid red !important;
+  }
+ </style>
