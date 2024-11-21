@@ -2,6 +2,7 @@
 import {ref} from 'vue'
 import apiFetch from "../../helpers/apiFetch.js";
 import ErrorDescription from "@/components/ErrorDescription.vue";
+import {useRouter} from "vue-router";
 
 const form = ref({
   data: {
@@ -13,17 +14,30 @@ const form = ref({
     birth_date: ''
   },
   errors:{},
-  IsProcessing: false,
+  isProcessing: false,
 
 })
 
+const router = useRouter()
+
 const sendForm = async ()=>{
+  if(form.value.isProcessing)
+  {
+    return;
+  }
+  form.value.isProcessing = true
+  console.log(form.value.isProcessing)
   form.value.errors = {}
   const result = await apiFetch('post', '/registration', form.value.data)
   if(result.error)
   {
     form.value.errors = result.error.errors
   }
+  if(result.data)
+  {
+    await router.replace('/auth')
+  }
+  form.value.isProcessing = false
 }
 </script>
 
@@ -87,7 +101,7 @@ const sendForm = async ()=>{
         </div>
 
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-sky-600 px-3 py-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">Зарегистрироваться</button>
+          <button type="submit" :disabled="form.isProcessing" class="flex w-full justify-center rounded-md bg-sky-600 px-3 py-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">Зарегистрироваться</button>
         </div>
       </form>
 
