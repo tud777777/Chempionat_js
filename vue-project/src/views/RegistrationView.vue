@@ -26,7 +26,6 @@ const sendForm = async ()=>{
     return;
   }
   form.value.isProcessing = true
-  console.log(form.value.isProcessing)
   form.value.errors = {}
   const result = await apiFetch('post', '/registration', form.value.data)
   if(result.error)
