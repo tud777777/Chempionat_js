@@ -5,6 +5,8 @@ import RegistrationView from "@/views/RegistrationView.vue";
 import AuthView from "@/views/AuthView.vue";
 import MissionsView from "@/views/MissionsView.vue";
 import AddMissionView from "@/views/AddMissionView.vue";
+import EditMissionView from "@/views/EditMissionView.vue";
+import SearchView from "@/views/SearchView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +41,22 @@ const router = createRouter({
       path: '/add-mission',
       name: 'add-mission',
       component: AddMissionView,
+      meta: {
+        forAuth: true,
+      }
+    },
+    {
+      path: '/edit-mission/:id',
+      name: 'edit-mission',
+      component: EditMissionView,
+      meta: {
+        forAuth: true,
+      }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchView,
       meta: {
         forAuth: true,
       }

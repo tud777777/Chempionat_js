@@ -27,5 +27,4 @@ export default async function (method, route, body = null)
     } catch {
         return null
     }
-
 }

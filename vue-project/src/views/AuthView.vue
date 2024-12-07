@@ -16,6 +16,7 @@ const form = ref({
 
 const router = useRouter()
 const updateToken = inject('updateToken')
+const updateId = inject('updateUserId')
 
 const sendForm = async ()=>{
   form.value.errors = {}
@@ -33,6 +34,7 @@ const sendForm = async ()=>{
 
   if(result.data.token){
     updateToken(result.data.token)
+    updateId(result.data.id)
     await router.replace('/')
   }
 }
