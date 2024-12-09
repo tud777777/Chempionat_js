@@ -37,11 +37,11 @@ const logout = async () => {
           <RouterLink to="/registration" class="text-sm font-semibold leading-6 text-gray-900">Регистрация</RouterLink>
         </template>
         <template v-if="isAuth">
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Заказ на Луне</a>
+          <RouterLink to="/order" class="text-sm font-semibold leading-6 text-gray-900">Заказ на Луне</RouterLink>
           <RouterLink to="/" class="text-sm font-semibold leading-6 text-gray-900">Гагарин</RouterLink>
           <RouterLink to="/missions" class="text-sm font-semibold leading-6 text-gray-900">Миссии</RouterLink>
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Рейсы</a>
-          <RouterLink to="/search" href="#" class="text-sm font-semibold leading-6 text-gray-900">Поиск</RouterLink>
+          <RouterLink to="/flights" class="text-sm font-semibold leading-6 text-gray-900">Рейсы</RouterLink>
+          <RouterLink to="/search" class="text-sm font-semibold leading-6 text-gray-900">Поиск</RouterLink>
         </template>
         </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end" v-if="isAuth">
