@@ -1,4 +1,4 @@
-export default async function (method, route, body = null)
+export default async function (method, route, body = null, isBlob= false)
 {
     const options = {
         method,
@@ -12,9 +12,15 @@ export default async function (method, route, body = null)
     }
     if (body)
     {
-        options.headers['Content-Type'] = 'application/json'
-        options.body = JSON.stringify(body)
-
+        if(body instanceof FormData)
+        {
+            options.body = body
+        }
+        else
+        {
+            options.headers['Content-Type'] = 'application/json'
+            options.body = JSON.stringify(body)
+        }
     }
     const response = await fetch( `http://kosmos/api-kosmos${route}`, options)
     if (response.status === 401)
@@ -23,7 +29,14 @@ export default async function (method, route, body = null)
         window.location.replace('/auth')
     }
     try{
-        return await response.json()
+        if(isBlob)
+        {
+            return await response.blob()
+        }
+        else
+        {
+            return await response.json()
+        }
     } catch {
         return null
     }
